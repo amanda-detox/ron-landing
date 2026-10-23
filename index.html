@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>רון גרשינסקי | Ron Gershinsky</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    color: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+  .lang-switch {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .lang-switch button {
+    background: #334155;
+    color: #f8fafc;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  .lang-switch button.active { background: #3b82f6; }
+  .container {
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    margin: 1.5rem auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 600;
+    color: white;
+  }
+  h1 { font-size: 1.75rem; margin-bottom: 0.25rem; font-weight: 700; }
+  .bio { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.5; }
+  .links { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .link-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: block;
+  }
+  .link-btn:hover { background: #334155; transform: translateY(-2px); }
+  .form-box, .contact-box {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .form-box h3, .contact-box h3 { margin-bottom: 0.75rem; font-size: 1.05rem; }
+  input[type="email"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: #f8fafc;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+  button.submit, .contact-btn {
+    width: 100%;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  button.submit:hover, .contact-btn:hover { background: #2563eb; }
+  .footer { margin-top: 2rem; font-size: 0.8rem; color: #64748b; }
+</style>
+</head>
+<body>
+  <div class="lang-switch">
+    <button id="btn-he" class="active" onclick="setLang('he')">עברית</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <div class="container">
+    <div class="avatar">רג</div>
+    <h1 id="name">רון גרשינסקי</h1>
+    <p class="bio" id="bio">טכנולוג, תלמיד של וולנס אינטגרלי (בכל התחומים בחיים)</p>
+
+    <div class="links" id="links"></div>
+
+    <div class="form-box">
+      <h3 id="waitlist-title">הרשמה מהירה לרשימת המתנה</h3>
+      <p id="waitlist-desc" style="font-size:0.9rem;color:#94a3b8;margin-bottom:0.75rem;">למוצרים, שירותים, פלטפורמות, אפליקציות ומרכזים שאני עובד על להקים</p>
+      <form onsubmit="handleWaitlist(event)">
+        <input type="email" id="email" placeholder="האימייל שלך" required>
+        <button type="submit" class="submit" id="waitlist-btn">הצטרף לרשימה</button>
+      </form>
+    </div>
+
+    <div class="contact-box">
+      <h3 id="contact-title">יצירת קשר</h3>
+      <a href="mailto:detoxify.ai@proton.me" class="contact-btn" id="contact-btn" style="display:block;text-align:center;text-decoration:none;">שלח אליי מייל</a>
+    </div>
+
+    <div class="footer" id="footer">© רון גרשינסקי</div>
+  </div>
+
+<script>
+const content = {
+  he: {
+    name: "רון גרשינסקי",
+    bio: "טכנולוג, תלמיד של וולנס אינטגרלי (בכל התחומים בחיים)",
+    links: [
+      "המלצות למי שמתמודד עם אתגרים נפשיים ואו פיזיים (כמעט תמיד זה בא ביחד, צרוף היטב)",
+      "המלצות לצעירים (בני 16 עד 28 בערך)",
+      "המלצות לאפליקציות",
+      "המלצות למי שמרגיש משועמם",
+      "המלצות למי שרוצה או כבר משתמש בפסיכדליה",
+      "המלצות למי שאוהב ניקיון וסדר (או חרד לגבי זה כמו ב אוסידי של ניקיון)",
+      "המלצות למי שמרגיש אובדני, על כל הספקטרום של זה",
+      "המלצות למי שרוב הכסף שלו נמצא בבנק אחד או במדינה אחת",
+      "המלצות למי שרוצה לשדרג את הבריאות שלו משמעותית (כולל מי שכבר בריא ובכושר על)",
+      "המלצות למי שרוצה להקים עסק ולהרוויח אונליין ואין לו רעיון טוב",
+      "המלצות למי שעובד כשכיר (כולל בכירים)",
+      "המלצות למי שרוצה לפתח את החמלה שלו, האקטיביזם ולמצוא את עצמו בעולם טוב יותר",
+      "המלצות לכיצד להתנהל עם פסיכיאטרים",
+      "המלצות לכיצד להתנהל עם מטפלים רגשיים (והאם כדאי בכלל)",
+      "בחן את עצמך - בדיקות עצמיות קלות וזריזות אונליין, כולל להתמכרות (במיוחד אם לדעתך אינך מכור!)"
+    ],
+    waitlistTitle: "הרשמה מהירה לרשימת המתנה",
+    waitlistDesc: "למוצרים, שירותים, פלטפורמות, אפליקציות ומרכזים שאני עובד על להקים",
+    waitlistBtn: "הצטרף לרשימה",
+    emailPlaceholder: "האימייל שלך",
+    contactTitle: "יצירת קשר",
+    contactBtn: "שלח אליי מייל",
+    footer: "© רון גרשינסקי"
+  },
+  en: {
+    name: "Ron Gershinsky",
+    bio: "Technologist, student of integral wellness (in all areas of life)",
+    links: [
+      "Recommendations for those dealing with mental and/or physical challenges (they almost always come together, well combined)",
+      "Recommendations for young people (ages 16 to 28 approximately)",
+      "App recommendations",
+      "Recommendations for those who feel bored",
+      "Recommendations for those who want to or already use psychedelics",
+      "Recommendations for those who love cleanliness and order (or are anxious about it like in OCD of cleanliness)",
+      "Recommendations for those who feel suicidal, across the entire spectrum of it",
+      "Recommendations for those whose most money is in one bank or one country",
+      "Recommendations for those who want to significantly upgrade their health (including those already healthy and in top shape)",
+      "Recommendations for those who want to start a business and earn online and don't have a good idea",
+      "Recommendations for those who work as employees (including seniors)",
+      "Recommendations for those who want to develop their compassion, activism and find themselves in a better world",
+      "Recommendations on how to deal with psychiatrists",
+      "Recommendations on how to deal with emotional therapists (and whether it's worth it at all)",
+      "Test yourself - easy and quick online self-tests, including for addiction (especially if you think you're not addicted!)"
+    ],
+    waitlistTitle: "Quick waitlist signup",
+    waitlistDesc: "For products, services, platforms, apps and centers I'm building",
+    waitlistBtn: "Join the list",
+    emailPlaceholder: "Your email",
+    contactTitle: "Contact",
+    contactBtn: "Send me an email",
+    footer: "© Ron Gershinsky"
+  }
+};
+
+function setLang(lang) {
+  const data = content[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  document.getElementById('name').textContent = data.name;
+  document.getElementById('bio').textContent = data.bio;
+  document.getElementById('waitlist-title').textContent = data.waitlistTitle;
+  document.getElementById('waitlist-desc').textContent = data.waitlistDesc;
+  document.getElementById('waitlist-btn').textContent = data.waitlistBtn;
+  document.getElementById('email').placeholder = data.emailPlaceholder;
+  document.getElementById('contact-title').textContent = data.contactTitle;
+  document.getElementById('contact-btn').textContent = data.contactBtn;
+  document.getElementById('footer').textContent = data.footer;
+
+  document.getElementById('btn-he').classList.toggle('active', lang === 'he');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+  const linksEl = document.getElementById('links');
+  linksEl.innerHTML = '';
+  data.links.forEach(text => {
+    const a = document.createElement('a');
+    a.href = '#';
+    a.className = 'link-btn';
+    a.textContent = text;
+    linksEl.appendChild(a);
+  });
+}
+
+function handleWaitlist(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  alert(document.documentElement.lang === 'he' 
+    ? 'תודה! נרשמת לרשימת המתנה. (בגרסה הזו זו הדגמה – בעתיד יתחבר לשירות אמיתי)'
+    : 'Thank you! You joined the waitlist. (This version is a demo – will connect to a real service later)');
+  document.getElementById('email').value = '';
+}
+
+setLang('he');
+</script>
+</body>
+</html>
